@@ -1,0 +1,38 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+.text-upon{
+    position: absolute;
+    margin-top: 100px;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(25, 233, 25);
+    font-size: xx-large;
+    font-family: 'Press Start 2P', cursive;
+}
+.space img{
+    position: absolute;
+    top: 200px;
+    left: 82%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    max-height: 50%;
+    max-width: 50%;
+}
+#game-board{
+    border: 1px solid black;
+}
