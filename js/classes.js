@@ -15,7 +15,7 @@ class Background {
         if(this.x < -canvas.width){
             this.x = 0;
         }
-        this.x -= 3;
+        this.x -= 1;
 
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image, this.x + canvas.width, this.y, this.width, this.height);
@@ -32,13 +32,24 @@ class Ship {
         this.img = new Image();
         this.img.src = "images/ships/movingcraft.gif";
         this.vy = 0;
-        this.vx = 1;
+        this.vx = 0.3;
         this.speed = 0;            
     }
     //methods 
     draw() {
-        this.x = this.x + this.vx;
+        // if(this.x > canvas.width*0.3){
+        //     this.x = 0;
+        // }
+        // this.x += this.vx;
+        
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+    update() {
+        if(this.img){
+        this.draw()
+        this.x += this.vx;
+        this.y += this.vy;
+        }
     }
     collision(obstacle) {
         return (
