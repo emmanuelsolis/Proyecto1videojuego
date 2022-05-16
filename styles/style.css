@@ -5,9 +5,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-
-.container {
+#container {
     position: relative;
     display: inline-block;
     text-align: center;
@@ -22,6 +20,13 @@
     font-size: xx-large;
     font-family: 'Press Start 2P', cursive;
 }
+#start-button{
+    background-color: crimson;
+    padding: 10px;
+    margin-top: 100px;
+    border-color: black;
+    font-family: 'Courier New', Courier, monospace;
+}
 .space img{
     position: absolute;
     top: 200px;
@@ -33,6 +38,6 @@
     max-height: 50%;
     max-width: 50%;
 }
-#game-board{
-    border: 1px solid black;
-}
+/* #game-board{
+    
+} */
