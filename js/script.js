@@ -7,6 +7,7 @@ window.onload = function() {
     // creamos la variable container que contiene nuestra portada para poder esconderla
     const container = document.getElementById('container');
     const obstacles = [];
+   
     
 // Iniciamos el juego presionando el boton start y ocultamos la portada
     document.getElementById("start-button").onclick = function() {
@@ -38,7 +39,9 @@ window.onload = function() {
         ship.draw();
         generateObstacles();
         drawObstacles();
-
+        projectiles.forEach(projectile => {
+            projectile.update();
+        });
         if(requestId){
             requestId = requestAnimationFrame(updateGame);
         }
@@ -111,6 +114,19 @@ window.onload = function() {
             }
         })
     }
+    // const player = new Player();
+    // Creamos una constante para los proyectiles
+    const projectiles = [new Projectile({
+        position: {
+            x: ship.x + ship.width / 2 +20,
+            y: ship.y + ship.height / 2 -20
+        },
+        velocity : {
+            x: 10,
+            y: 0
+        }
+    })];
+
    //creamos una constante pare las teclas de movimiento que no siga moviendose una vez dejadas de presionar
         const keys = {
             ArrowUp: {
@@ -149,6 +165,19 @@ window.onload = function() {
                 console.log("Derecha");
                 ship.vx = 90;
                 keys.ArrowRight.pressed = true;
+                break;
+            case ' ':
+                console.log("Disparo");
+                projectiles.push(new Projectile({
+                    position: {
+                        x: ship.x + ship.width / 2 +20,
+                        y: ship.y + ship.height / 2 -20
+                    },
+                    velocity : {
+                        x: 10,
+                        y: 0
+                    }
+                }));
                 break;
         
         };

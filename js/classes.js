@@ -60,6 +60,27 @@ class Ship {
         )
     }
 }
+class Projectile {
+    constructor ({position, velocity}) {
+        this.position = position;
+        this.velocity = velocity;
+        this.width = 200;
+        this.height = 3;
+    }
+    //Methods
+    draw() {
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        this.x += this.velocity.x;
+        // ctx.drawImage(this.img, ship.x, ship.y, this.width, this.height);
+    }
+    update () {
+        this.draw();
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
+
+}
 // Esta clase es para elegir entre tres diferentes naves para el inicio del juego
 class SpaceShip extends Ship {
     constructor(x, y, w, h) {
