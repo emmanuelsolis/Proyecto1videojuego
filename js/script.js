@@ -1,12 +1,16 @@
+
+import {controller} from './controller.js';
 window.onload = function() {
+
 //Llamamos o instanciamos las calses que vamos a utilizar
     const bg = new Background(canvas.width, canvas.height);
     const ship = new Ship(100, 300, 200, 200);
+    // const obstacle = new Obstacle();
     // const obstacle = new Obstacle(100, 100, 50, 50);
 
     // creamos la variable container que contiene nuestra portada para poder esconderla
     const container = document.getElementById('container');
-    const obstacles = [];
+    
    
     
 // Iniciamos el juego presionando el boton start y ocultamos la portada
@@ -18,6 +22,7 @@ window.onload = function() {
 
     };
 // Iniciamos el juego
+    
     function startGame() {
         requestId = requestAnimationFrame(updateGame);
     }
@@ -34,18 +39,32 @@ window.onload = function() {
          frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ship.update();
-
+        
         bg.draw();
         ship.draw();
-        generateObstacles();
-        drawObstacles();
-        projectiles.forEach(projectile => {
-            projectile.update();
-        });
+        spawnAsteroids();
+        spliceObstacles();
+        asteroids.forEach((asteroid, index_asteroid)=> {
+                asteroid.update();
+                
+                projectiles.forEach((projectile, index_projectile)=> {
+                    projectile.update();
+                    if(projectile.collision(asteroid)) {
+                        projectiles.splice(index_projectile, 1);
+                        asteroids.splice(index_asteroid, 1);
+                        // points++;
+                    }
+                })
+                if(ship.collision(asteroid)) {
+                    gameOver();
+
+                }
+
+            });
         if(requestId){
             requestId = requestAnimationFrame(updateGame);
         }
-        if(keys.ArrowUp.pressed && ship.y >= 0) {
+        if(keys.ArrowUp.pressed) {
             ship.vy = -20;
         }else if(keys.ArrowDown.pressed){
             ship.vy = 20;
@@ -53,9 +72,9 @@ window.onload = function() {
             ship.vy = 0;
         }
         if(keys.ArrowLeft.pressed){
-            ship.vx = -20;
+            ship.vx = -200;
         }else if(keys.ArrowRight.pressed){
-            ship.vx = 20;
+            ship.vx = 100;
         }else{
             ship.vx = 0;
         }   
@@ -70,51 +89,86 @@ window.onload = function() {
 
     function changeBackground() {}
 
-    function generateObstacles() {
-        //limitamos el número de obstáculos que aparecerán en pantalla
+    // creamos un array para los obstáculos
+    const obstacles = []
+     const asteroids = []
+    // creamos una funcion para crear los enemigos
+    function spawnAsteroids() {
+        if(frames % 160 === 0) {
+        //game over
+        //recortes
+        //win
+        //pintar el score 
+            const image = obstaclesImg[Math.floor(Math.random() * obstaclesImg.length)];
+
+            const radius = Math.random() * 30;
+            let x
+            let y
+            if (Math.random() < 0.5) {
+                x = Math.random() < 0.5 ?  0 - radius : canvas.width + radius;
+                y = Math.random() * canvas.height;
+            } else {
+                x = Math.random() * canvas.width;
+                y = Math.random() < 0.5 ?  0 - radius : canvas.height + radius;
+            }
+            const color = 'slategrey';
+            // this.image = new Image();
+            // this.image.src = 'imgages/asteroids/ast2.png';
+            const angle  = Math.atan2(
+                canvas.height / 2 -y,
+                canvas.width / 2 -x
+            )
+            const velocity = {
+                x: Math.cos(angle),
+                y: Math.sin(angle)
+            }
+                asteroids.push(new Asteroid( x,y,radius,color, velocity, image))
+                console.log(asteroids);
+            
+        }
+
+    }
+    function spliceObstacles(index) {
+        if(asteroids.length > 5) {
+            asteroids.forEach((asteroid, index) => {
+                asteroids.splice(asteroid);
+            })
+    
+        }
+    }
+    /* function generateObstacles() {
+        limitamos el número de obstáculos que aparecerán en pantalla
         if ( !(frames % 160 === 0)){
             return true 
         }
-
-        for (const element of obstaclesImg) {
-            //Math.floor(Math.random() * (max - min + 1)) + min(tamaño de la altura del  gap o de la nave)
-            //generamos un height random para que aparezcan en diferentes posiciones en Y
-            // const height = Math.floor(Math.random() * (canvas.height * 0.6)) + ship.height;
-                const posY = Math.floor(Math.random() * (canvas.height * 0.6)) + 100;
-                //generamos un width random para que aparezcan en diferentes posiciones en X
-                const posX = Math.floor(Math.random() * (canvas.width * 0.4)) + 100;
+        
+        para que aparezcan a diferentes intervalos
+        setInterval(()=>{
+                for (element of obstaclesImg) {
+                Math.floor(Math.random() * (max - min + 1)) + min(tamaño de la altura del  gap o de la nave)
+                generamos un height random para que aparezcan en diferentes posiciones en Y
+                const height = Math.floor(Math.random() * (canvas.height * 0.6)) + ship.height;
+                const y = Math.floor(Math.random() * (canvas.height * 0.6)) + 100;
+                generamos un width random para que aparezcan en diferentes posiciones en X
+                const x = Math.floor(Math.random() * (canvas.width * 0.4)) + 100;
                 let randomObstacle = new Obstacle(obstaclesImg[element],posX, posY, 200, 200);
                 obstacles.push(randomObstacle);
+                obstacles.push(new Obstacle(x,y,width,height,velocity.x,velocity.y));
                 if(obstacles.length > 3){
                     obstacles.shift();
                 }
-        }
-    
-    }
-
-    //Dibuja los objetos de la colleccion newObstacle
-    function drawObstacles() {
-
-        for (const element of obstacles) {
-            element.draw();
-        }   
-    //     obstacles.forEach((obstacle, index_obstacles) => {
-    //         // setInterval
-    //         obstacle.draw();
-    //     })
-    }
-
-    function appearObs() {
-
-    }
-    function checkCollision() {
-        newObstacle.forEach((obstacle, index_obstacles) => {
-            if (ship.collision(obstacle)) {
-                gameOver();
             }
-        })
-    }
+    
+    } */
+    
+    
+
+    
+
+    
+   
     // const player = new Player();
+    
     // Creamos una constante para los proyectiles
     const projectiles = [new Projectile({
         position: {
@@ -125,6 +179,7 @@ window.onload = function() {
             x: 10,
             y: 0
         }
+       
     })];
 
    //creamos una constante pare las teclas de movimiento que no siga moviendose una vez dejadas de presionar
@@ -158,12 +213,12 @@ window.onload = function() {
                 break;
             case 'ArrowLeft':
                 console.log("Izquierda");
-                ship.vx = -90;
+                ship.vx = -100;
                 keys.ArrowLeft.pressed = true;
                 break;
             case 'ArrowRight':
                 console.log("Derecha");
-                ship.vx = 90;
+                ship.vx = 100;
                 keys.ArrowRight.pressed = true;
                 break;
             case ' ':
@@ -178,6 +233,7 @@ window.onload = function() {
                         y: 0
                     }
                 }));
+                console.log("proyectiles", projectiles)
                 break;
         
         };
@@ -197,12 +253,12 @@ window.onload = function() {
                 break;
             case 'ArrowLeft':
                 console.log("Izquierda");
-                ship.vx = -20;
+                ship.vx = -100;
                 keys.ArrowLeft.pressed = false;
                 break;
             case 'ArrowRight':
                 console.log("Derecha");
-                ship.vx = 20;
+                ship.vx = 100;
                 keys.ArrowRight.pressed = false;
                 break;
         
@@ -227,4 +283,5 @@ window.onload = function() {
     addEventListener("keyright", (e)=>{
         e.preventDefault();
     });
+
 }

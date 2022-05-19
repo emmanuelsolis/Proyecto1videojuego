@@ -36,6 +36,8 @@ class Ship {
         this.speed = 0;            
     }
     //methods 
+
+    
     draw() {
         // if(this.x > canvas.width*0.3){
         //     this.x = 0;
@@ -66,21 +68,59 @@ class Projectile {
         this.velocity = velocity;
         this.width = 200;
         this.height = 3;
+        this.bullets = [];
     }
-    //Methods
     draw() {
         ctx.fillStyle = "red";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         this.x += this.velocity.x;
-        // ctx.drawImage(this.img, ship.x, ship.y, this.width, this.height);
     }
     update () {
         this.draw();
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
     }
+    collision(obstacle) {
+        return (
+            this.position.x < obstacle.x + obstacle.width &&
+            this.position.x + this.width > obstacle.x &&
+            this.position.y < obstacle.y + obstacle.height &&
+            this.position.y + this.height > obstacle.y
+        )
+    }
 
 }
+class Asteroid {
+    constructor ( x, y,radius, color, velocity, image) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.garbage = new Image();
+        this.garbage.src = image;
+        this.velocity = velocity;
+        this.width = 200;
+        this.height = 200;
+    }
+    //Methods
+    draw() {
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        // ctx.fillStyle = this.color;
+        // ctx.fill();
+        ctx.drawImage(this.garbage, this.x, this.y, this.width, this.height);
+    }
+    update () {
+        this.draw();
+        this.x += this.velocity.x;
+        this.y +=  this.velocity.y;
+    }
+    
+}
+
+
+// Creamos nuestros enemigos
+
 // Esta clase es para elegir entre tres diferentes naves para el inicio del juego
 class SpaceShip extends Ship {
     constructor(x, y, w, h) {
@@ -100,25 +140,36 @@ class SpaceShip extends Ship {
 }
 // para los obstáculos a librar y la basura espacial
 class Obstacle  extends Ship {
-    constructor(image, x, y, h) {
+    constructor( x, y, h) {
         super(x, y, 100,h);
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+
         this.x = x;
         this.y = y;
-        this.image = new Image();
-        this.image.src =  obstacles;
-        this.width = 100;
-        this.height = h;
-        this.vy = 0;
-        this.vx = 1;}
+        this.garbage = new Image();
+        this.garbage.src =  "images/asteroids/ast2.jpg";
+        
+        }
+    
     draw() {
         if(!(frames % 60 === 0)){
             return true
         }   
-        for(const element of obstaclesImg) {
-            setInterval(() => {
-                this.image.src = obstacles[element];
-            }, 20000);
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        
+        ctx.drawImage(this.garbage, 
+                        this.position.x, 
+                        this.position.y, 
+                        this.width, 
+                        this.height);
+    }
+    update() {
+        if(this.garbage){
+        this.draw()
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
         }
     }
 }
