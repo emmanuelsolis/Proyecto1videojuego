@@ -99,8 +99,8 @@ class Asteroid {
         this.garbage = new Image();
         this.garbage.src = image;
         this.velocity = velocity;
-        this.width = 100;
-        this.height = 100;
+        this.width = 75;
+        this.height = 75;
     }
     //Methods
     draw() {

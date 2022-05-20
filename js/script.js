@@ -2,7 +2,7 @@ window.onload = function() {
 
 //Llamamos o instanciamos las calses que vamos a utilizar
     const bg = new Background(canvas.width, canvas.height);
-    const ship = new Ship(100, 300, 100, 100);
+    const ship = new Ship(100, 300, 75, 75);
     // const obstacle = new Obstacle();
     // const obstacle = new Obstacle(100, 100, 50, 50);
 
@@ -127,7 +127,7 @@ window.onload = function() {
 
     }
     function spliceObstacles(index) {
-        if(asteroids.length > 5) {
+        if(asteroids.length > 15) {
             asteroids.forEach((asteroid, index) => {
                 asteroids.splice(asteroid);
             })
