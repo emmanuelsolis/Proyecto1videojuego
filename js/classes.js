@@ -30,7 +30,7 @@ class Ship {
         this.width = w;
         this.height = h;
         this.img = new Image();
-        this.img.src = "images/ships/movingcraft.gif";
+        this.img.src = "images/Recurso 2.png";
         this.vy = 0;
         this.vx = 0.3;
         this.speed = 0;            
@@ -99,8 +99,8 @@ class Asteroid {
         this.garbage = new Image();
         this.garbage.src = image;
         this.velocity = velocity;
-        this.width = 200;
-        this.height = 200;
+        this.width = 100;
+        this.height = 100;
     }
     //Methods
     draw() {

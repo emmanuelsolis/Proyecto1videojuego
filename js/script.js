@@ -1,10 +1,8 @@
-
-import {controller} from './controller.js';
 window.onload = function() {
 
 //Llamamos o instanciamos las calses que vamos a utilizar
     const bg = new Background(canvas.width, canvas.height);
-    const ship = new Ship(100, 300, 200, 200);
+    const ship = new Ship(100, 300, 100, 100);
     // const obstacle = new Obstacle();
     // const obstacle = new Obstacle(100, 100, 50, 50);
 
@@ -136,36 +134,6 @@ window.onload = function() {
     
         }
     }
-    /* function generateObstacles() {
-        limitamos el número de obstáculos que aparecerán en pantalla
-        if ( !(frames % 160 === 0)){
-            return true 
-        }
-        
-        para que aparezcan a diferentes intervalos
-        setInterval(()=>{
-                for (element of obstaclesImg) {
-                Math.floor(Math.random() * (max - min + 1)) + min(tamaño de la altura del  gap o de la nave)
-                generamos un height random para que aparezcan en diferentes posiciones en Y
-                const height = Math.floor(Math.random() * (canvas.height * 0.6)) + ship.height;
-                const y = Math.floor(Math.random() * (canvas.height * 0.6)) + 100;
-                generamos un width random para que aparezcan en diferentes posiciones en X
-                const x = Math.floor(Math.random() * (canvas.width * 0.4)) + 100;
-                let randomObstacle = new Obstacle(obstaclesImg[element],posX, posY, 200, 200);
-                obstacles.push(randomObstacle);
-                obstacles.push(new Obstacle(x,y,width,height,velocity.x,velocity.y));
-                if(obstacles.length > 3){
-                    obstacles.shift();
-                }
-            }
-    
-    } */
-    
-    
-
-    
-
-    
    
     // const player = new Player();
     
@@ -199,30 +167,24 @@ window.onload = function() {
         }                                
     
     addEventListener('keydown', ({key}) => {
-        console.log(key);
         switch (key) {
             case 'ArrowUp':
-                console.log("Arriba");
                 ship.vy = -20;
                 keys.ArrowUp.pressed = true;
                 break;
             case 'ArrowDown':
-                console.log("Abajo");
                 ship.vy = 20;
                 keys.ArrowDown.pressed = true;
                 break;
             case 'ArrowLeft':
-                console.log("Izquierda");
                 ship.vx = -100;
                 keys.ArrowLeft.pressed = true;
                 break;
             case 'ArrowRight':
-                console.log("Derecha");
                 ship.vx = 100;
                 keys.ArrowRight.pressed = true;
                 break;
             case ' ':
-                console.log("Disparo");
                 projectiles.push(new Projectile({
                     position: {
                         x: ship.x + ship.width / 2 +20,
@@ -233,31 +195,25 @@ window.onload = function() {
                         y: 0
                     }
                 }));
-                console.log("proyectiles", projectiles)
                 break;
         
         };
     });
     addEventListener('keydown', ({key}) => {
-        console.log(key);
         switch (key) {
             case 'ArrowUp':
-                console.log("Arriba");
                 ship.vy = -20;
                 keys.ArrowUp.pressed = false;
                 break;
             case 'ArrowDown':
-                console.log("Abajo");
                 ship.vy = 20;
                 keys.ArrowDown.pressed = false;
                 break;
             case 'ArrowLeft':
-                console.log("Izquierda");
                 ship.vx = -100;
                 keys.ArrowLeft.pressed = false;
                 break;
             case 'ArrowRight':
-                console.log("Derecha");
                 ship.vx = 100;
                 keys.ArrowRight.pressed = false;
                 break;

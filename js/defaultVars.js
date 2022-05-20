@@ -6,7 +6,7 @@ let frames = 0;
 const gravity = 0;
 
 //almacenamos nuestras imágenes en arreglos
-const obstaclesImg = ["../images/asteroids/ast2.jpg", "../images/satellites/sat2.png", "../images/ships/rocket.jpg"];
+const obstaclesImg = ["images/Recurso1.png", "/images/Recurso3.png", "/images/Recurso4.png", "/images/Recurso5.png", "images/Recurso7.png", "/images/Recurso8.png", "/images/movingcraft.gif", "/images/ufo.png"];
 const SpaceShipImg = ["../images/ships/movingcraft.gif", "../images/ships/spacecraft.jpg", "../images/ships/ship7.png"];
 
 const obstacles = []
