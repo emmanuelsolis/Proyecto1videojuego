@@ -3,6 +3,7 @@ window.onload = function() {
 //Llamamos o instanciamos las calses que vamos a utilizar
     const bg = new Background(canvas.width, canvas.height);
     const ship = new Ship(100, 300, 75, 75);
+    
     // const obstacle = new Obstacle();
     // const obstacle = new Obstacle(100, 100, 50, 50);
 
@@ -26,9 +27,17 @@ window.onload = function() {
     }
 //Cuando se termine la vida
     function gameOver() {
+        
+        
+        ctx.drawImage(dead, 400, 200, 700, 500);
         requestId = undefined
+        
     }
-    function resetGame() {}
+    function resetGame() {
+        if(!requestId) {
+            startGame();
+          }
+    }
 
 
     function winGame() {}
@@ -41,24 +50,28 @@ window.onload = function() {
         bg.draw();
         ship.draw();
         spawnAsteroids();
+        ctx.font = "40px white Arial";
+        ctx.fillText(`Points: ${points}`, canvas.width - 600, 100);
         spliceObstacles();
+        
         asteroids.forEach((asteroid, index_asteroid)=> {
                 asteroid.update();
-                
                 projectiles.forEach((projectile, index_projectile)=> {
                     projectile.update();
                     if(projectile.collision(asteroid)) {
                         projectiles.splice(index_projectile, 1);
                         asteroids.splice(index_asteroid, 1);
-                        // points++;
+                        points++;
+                        console.log("points: " + points);
                     }
                 })
                 if(ship.collision(asteroid)) {
                     gameOver();
-
                 }
+        });
+       
 
-            });
+
         if(requestId){
             requestId = requestAnimationFrame(updateGame);
         }
@@ -76,12 +89,15 @@ window.onload = function() {
         }else{
             ship.vx = 0;
         }   
-
+       
     }
 
     function shoot() {}
 
-    function exploid() {}
+    function showScoreandLives() {
+        // ctx.fillText(  ${points} , 20, 50  )
+
+    }
 
     function disapear() {}
 
@@ -90,6 +106,7 @@ window.onload = function() {
     // creamos un array para los obstáculos
     const obstacles = []
      const asteroids = []
+     
     // creamos una funcion para crear los enemigos
     function spawnAsteroids() {
         if(frames % 160 === 0) {
@@ -127,12 +144,29 @@ window.onload = function() {
 
     }
     function spliceObstacles(index) {
-        if(asteroids.length > 15) {
+         if(asteroids.length > 20) {
             asteroids.forEach((asteroid, index) => {
                 asteroids.splice(asteroid);
             })
     
         }
+        asteroids.forEach((asteroid, index_asteroid)=> {
+            asteroid.update();
+            
+            asteroids.forEach((asteroid, index_projectile)=> {
+                asteroid.update();
+                if(asteroid === canvas.width || asteroid === canvas.height) {
+                    asteroids.splice(index_asteroid, 1);
+                    // points++;
+                }
+            })
+            if(ship.collision(asteroid)) {
+                
+                gameOver();
+
+            }
+
+        });
     }
    
     // const player = new Player();

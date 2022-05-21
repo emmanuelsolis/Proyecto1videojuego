@@ -7,7 +7,7 @@ class Background {
         this.width = width;
         this.height = height;
         this.image = new Image();
-        this.image.src = "images/milkyway.png";
+        this.image.src = "images/sky.png";
     }
     //Métodos
     draw() {
@@ -99,15 +99,11 @@ class Asteroid {
         this.garbage = new Image();
         this.garbage.src = image;
         this.velocity = velocity;
-        this.width = 75;
-        this.height = 75;
+        this.width = 125;
+        this.height = 125;
     }
     //Methods
     draw() {
-        // ctx.beginPath();
-        // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        // ctx.fillStyle = this.color;
-        // ctx.fill();
         ctx.drawImage(this.garbage, this.x, this.y, this.width, this.height);
     }
     update () {
