@@ -44,7 +44,7 @@ function startGame() {
 
 
     function winGame() {
-        if(points >= 10) {
+        if(points >= 25) {
             ctx.drawImage(won, 400, 200, 700, 500);
             audio.pause();
             resetGame();
@@ -73,7 +73,6 @@ function startGame() {
                         projectiles.splice(index_projectile, 1);
                         asteroids.splice(index_asteroid, 1);
                         points++;
-                        console.log("points: " + points);
                     }
                 })
                 if(ship.collision(asteroid)) {
@@ -108,16 +107,6 @@ function startGame() {
        
     }
 
-    function shoot() {}
-
-    function showScoreandLives() {
-        // ctx.fillText(  ${points} , 20, 50  )
-
-    }
-
-    function disapear() {}
-
-    function changeBackground() {}
 
     // creamos un array para los obstáculos
     const obstacles = []
@@ -294,6 +283,9 @@ function startGame() {
     });
     addEventListener("keyright", (e)=>{
         e.preventDefault();
+    });
+    addEventListener("87", (e)=>{
+        startGame();
     });
 
 }
