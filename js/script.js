@@ -2,7 +2,7 @@ window.onload = function() {
 
 //Llamamos o instanciamos las calses que vamos a utilizar
     const bg = new Background(canvas.width, canvas.height);
-    const ship = new Ship(100, 300, 75, 75);
+    const ship = new Ship(100, 300, 100, 100);
     
     // const obstacle = new Obstacle();
     // const obstacle = new Obstacle(100, 100, 50, 50);
@@ -21,16 +21,19 @@ window.onload = function() {
 
     };
 // Iniciamos el juego
-    
-    function startGame() {
+function startGame() {
+        audio.play();
+        audio.volume = 0.2;
+
         requestId = requestAnimationFrame(updateGame);
     }
 //Cuando se termine la vida
     function gameOver() {
-        
-        
+        if(health <= 0) {
+            audio.pause();
         ctx.drawImage(dead, 400, 200, 700, 500);
         requestId = undefined
+        }
         
     }
     function resetGame() {
@@ -40,7 +43,13 @@ window.onload = function() {
     }
 
 
-    function winGame() {}
+    function winGame() {
+        if(points >= 10) {
+            ctx.drawImage(won, 400, 200, 700, 500);
+            audio.pause();
+            resetGame();
+            }
+    }
 
     function updateGame() {
          frames++;
@@ -52,13 +61,15 @@ window.onload = function() {
         spawnAsteroids();
         ctx.font = "40px white Arial";
         ctx.fillText(`Points: ${points}`, canvas.width - 600, 100);
+        ctx.fillText(`Heath: ${health}`, canvas.width - 600, 150);
         spliceObstacles();
-        
+        winGame();
+        resetGame();
         asteroids.forEach((asteroid, index_asteroid)=> {
                 asteroid.update();
                 projectiles.forEach((projectile, index_projectile)=> {
                     projectile.update();
-                    if(projectile.collision(asteroid)) {
+                    if(projectile.collision(asteroid) || ship.collision(asteroid)) {
                         projectiles.splice(index_projectile, 1);
                         asteroids.splice(index_asteroid, 1);
                         points++;
@@ -66,8 +77,13 @@ window.onload = function() {
                     }
                 })
                 if(ship.collision(asteroid)) {
-                    gameOver();
+                    health--;
+                    // if (lives === 0) {
+                    //     gameOver();
+                    // }
+                
                 }
+        gameOver();
         });
        
 
@@ -161,8 +177,10 @@ window.onload = function() {
                 }
             })
             if(ship.collision(asteroid)) {
-                
-                gameOver();
+                health--;
+                // if (lives === 0) {
+                // gameOver();
+                // }
 
             }
 
@@ -229,6 +247,10 @@ window.onload = function() {
                         y: 0
                     }
                 }));
+                break;
+            case 'keyW':
+                resetGame();
+                startGame();
                 break;
         
         };

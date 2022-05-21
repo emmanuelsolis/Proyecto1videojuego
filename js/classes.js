@@ -24,7 +24,7 @@ class Background {
 }
 // Para nuestras naves
 class Ship {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, lives) {
         this.x = x;
         this.y = y;
         this.width = w;
@@ -33,7 +33,8 @@ class Ship {
         this.img.src = "images/Recurso 2.png";
         this.vy = 0;
         this.vx = 0.3;
-        this.speed = 0;            
+        this.speed = 0;
+        this.health = health;    
     }
     //methods 
 
